@@ -1,0 +1,22 @@
+{% extends 'ajax_base.html' %}
+{% block content %}
+    {#        context = {'eat_protein':eat_protein,'eat_carbohydrate':eat_carbohydrate,'eat_fat':eat_fat}#}
+    <form>
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-4">
+                    <label for="protein">蛋白质:</label>
+                    <input type="number" class="form-control" id="protein" placeholder="protein" value="{{ eat_protein }}">
+                </div>
+                <div class="col-sm-4">
+                    <label for="carbohydrate">碳水:</label>
+                    <input type="number" class="form-control" id="carbohydrate" placeholder="carbohydrate" value="{{ eat_carbohydrate }}">
+                </div>
+                <div class="col-sm-4">
+                    <label for="fat">脂肪:</label>
+                    <input type="number" class="form-control" id="fat" placeholder="fat" value="{{ eat_fat }}">
+                </div>
+            </div>
+        </div>
+    </form>
+{% endblock %}

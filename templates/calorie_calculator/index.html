@@ -1,0 +1,77 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    卡路里计算
+{% endblock %}
+
+{% block content %}
+    <form>
+    {% csrf_token %}
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-6">
+                    <label for="weight">体重:</label>
+                    <input type="number" class="form-control" id="weight" placeholder="体重" value="80">
+                </div>
+                <div class="col-sm-6">
+                    <label for="cal_per_wei">热量/kg:</label>
+                    <input type="number" class="form-control" id="cal_per_wei" placeholder="cal_per_wei" value="36">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-4">
+                    <label for="protein">蛋白百分比:</label>
+                    <input type="number" class="form-control" id="protein" placeholder="protein" value="0.35">
+                </div>
+                <div class="col-sm-4">
+                    <label for="carbohydrate">碳水:</label>
+                    <input type="number" class="form-control" id="carbohydrate" placeholder="carbohydrate" value="0.45">
+                </div>
+                <div class="col-sm-4">
+                    <label for="fat">脂肪:</label>
+                    <input type="number" class="form-control" id="fat" placeholder="fat" value="0.2">
+                </div>
+            </div>
+            <div class="row">
+                <input type="button" value="计算" id="calculator">
+            </div>
+        </div>
+
+
+    </form>
+
+    <div class="container" id="cal_calorie"></div>
+{% endblock %}
+
+{% block script %}
+    <script>
+        $('#calculator').click(function () {
+            let p = Number($('#protein').val());
+            let c = Number($('#carbohydrate').val());
+            let f = Number($('#fat').val());
+            alert(p+c+f);
+            if( p + c + f == 1.0){
+                $.ajax({
+                    url: '/calculator/cal_calulator/',
+                    type: 'POST',
+                    data: {
+                        'weight': $('#weight').val(),
+                        'cal_per_wei': $('#cal_per_wei').val(),
+                        'protein': $('#protein').val(),
+                        'carbohydrate': $('#carbohydrate').val(),
+                        'fat': $('#fat').val(),
+                        "csrfmiddlewaretoken": $('[name="csrfmiddlewaretoken"]').val(),
+
+                    },
+                    success: function (data) {
+                        $('#cal_calorie').html(data);
+                    }
+                }
+            )
+            }
+            else {
+                alert('请保证和是一！！！！！')
+            }
+        })
+    </script>
+{% endblock %}
